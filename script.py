@@ -6,14 +6,21 @@ directory = r'C:\Users\Matheus\OneDrive\Nuvem\ELSC\PROJETOS\SGBDIT - CHESF - PRE
 
 print("------------------ | Script iniciado com sucesso | ------------------")
 
-results = pd.DataFrame()
-
+results  = pd.DataFrame()
 for i in os.listdir(directory):
-    file = os.path.join(directory, i)
-    df = pd.read_excel(file, usecols=cols, sheet_name=0, skiprows=1)
-    df['Nome_Planilha'] = i  # Adiciona uma coluna com o nome da planilha
+    file = os.path.join(directory,i)
+    df = pd.read_excel(file,usecols=cols,sheet_name = 0,skiprows=1)
+    df['nome'] = os.path.splitext(i)[0]
     results = pd.concat([results, df])
-    print("Os dados da planilha |" + i + "| foram carregados com sucesso para planilha de relatório.")
+    print("Os dados da planilha |"+i+"| foram carreagados com sucesso para planilha de relatório.")
+results = results.rename(columns={
+    'TX_NUM_EQUIPAMENTO': 'tx-num',
+    'Num_Operacional': 'num_op',
+    'Ident_Equip_Def_ONS': 'iden_equip_def_ons',
+    'Tensao_Nominal': 'tensao',
+    'Sigla_Subestacao': 'sub',
+    'ONDA': 'onda'
+})
+results.to_excel(os.path.join(directory,"results.xlsx"))
 
-results.to_excel(os.path.join(directory, "results.xlsx"))
 print("Dados combinados salvos com sucesso!")
