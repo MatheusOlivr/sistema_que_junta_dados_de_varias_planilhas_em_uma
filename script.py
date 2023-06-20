@@ -7,12 +7,14 @@ directory = r'C:\Users\Matheus\OneDrive\Nuvem\ELSC\PROJETOS\SGBDIT - CHESF - PRE
 print("------------------ | Script iniciado com sucesso | ------------------")
 
 results  = pd.DataFrame()
+
 for i in os.listdir(directory):
     file = os.path.join(directory,i)
     df = pd.read_excel(file,usecols=cols,sheet_name = 0,skiprows=1)
     df['nome'] = os.path.splitext(i)[0]
     results = pd.concat([results, df])
     print("Os dados da planilha |"+i+"| foram carreagados com sucesso para planilha de relatório.")
+
 results = results.rename(columns={
     'TX_NUM_EQUIPAMENTO': 'tx-num',
     'Num_Operacional': 'num_op',
